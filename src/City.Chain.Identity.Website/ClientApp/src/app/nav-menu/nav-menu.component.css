@@ -116,7 +116,7 @@ header {
 }
 
 .logo-icon {
-  
+
 }
 
 .menu-text {
@@ -126,12 +126,13 @@ header {
   font-size: 0.8em;
 }
 
+
 .burger {
   font-size: 1.4em;
 }
 
 @media only screen and (max-width: 600px) {
-  .menu-text {
+  .hide-mobile {
     display: none;
   }
 
