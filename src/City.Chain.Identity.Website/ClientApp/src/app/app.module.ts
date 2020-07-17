@@ -38,6 +38,8 @@ import { RegisterSignComponent } from './register/sign.component';
       // { path: 'counter', component: CounterComponent },
       // { path: 'fetch-data', component: FetchDataComponent },
       { path: 'registry', component: RegistryComponent },
+      { path: 'view/:address', component: RegistryComponent },
+
       { path: 'register', component: RegisterComponent },
       { path: 'register/verify', component: RegisterVerifyComponent },
       { path: 'register/sign', component: RegisterSignComponent },

@@ -135,6 +135,10 @@ strong {
   font-weight: 900;
 }
 
+.error {
+  color: red;
+}
+
 .button {
   white-space: nowrap;
   background-color: white;
@@ -270,5 +274,12 @@ strong {
 
   h1 {
     font-size: 2em;
+  }
+}
+
+
+@media only screen and (max-width: 600px) {
+  .hide-mobile {
+    display: none;
   }
 }

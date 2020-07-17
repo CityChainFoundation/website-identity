@@ -3,8 +3,72 @@
 
    <div class="ruler"></div>
 
-   <p>Lookup identities</p>
+   <p>Lookup identities by their id. You need to know the exact id to find an identity.</p>
 
-   [Coming soon]
+   <div class="input-container">
+      <input type="text" name="name" [(ngModel)]="address" placeholder="Identity">
+      <a class="button" [routerLink]="['/view', address]">Lookup <span class="hide-mobile">Identity</span> <span
+            class="mu mu-search"></span></a>
+   </div>
+
+   <div class="error" *ngIf="error">
+      <p>Couldn't find any identity with that id.</p>
+   </div>
+
+   <div *ngIf="identity">
+
+      <h3>Found identity</h3>
+
+      <div class="list-item">
+         <strong>ID</strong>
+         <span>{{identity.id}}</span>
+      </div>
+
+      <div class="list-item">
+         <strong>Name</strong>
+         <span>{{identity.name}}</span>
+      </div>
+
+      <div class="list-item">
+         <strong>Shortname</strong>
+         <span>{{identity.shortName}}</span>
+      </div>
+
+      <div class="list-item">
+         <strong>Alias</strong>
+         <span>{{identity.alias}}</span>
+      </div>
+
+      <div class="list-item">
+         <strong>Title</strong>
+         <span>{{identity.title}}</span>
+      </div>
+
+      <div class="list-item">
+         <strong>Email</strong>
+         <span>{{identity.email}}</span>
+      </div>
+
+      <br><br>
+
+      <div class="list-item">
+         <strong>Signature</strong>
+         <span class="list-item-break">{{container.signature}}</span>
+      </div>
+
+      <div class="list-item">
+         <strong>Document</strong>
+         <textarea class="document">{{container | json}}</textarea>
+      </div>
+
+   </div>
+
+   <div class="ruler"></div>
+
+   <h3>Don't trust. Verify.</h3>
+
+   <p>You don't need to trust our word that the information is correct, you can verify by yourself.</p>
+
+   <p>Check out the <a href="https://docs.blockcore.net/" target="_blank">documentation</a> on how to perform a verification.</p>
 
 </div>
