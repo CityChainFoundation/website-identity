@@ -1,0 +1,49 @@
+<div class="grid-container">
+  <div class="footer">
+
+    <div class="footer-right hide-xs">
+      <span class="hide-s">Powered by </span><a href="https://www.city-chain.org/" target="_blank">
+        Smart City
+        Platform
+      </a>
+    </div>
+
+  </div>
+  <div class="content" id="content">
+    <router-outlet></router-outlet>
+
+    <div class="footer-links-wrapper">
+      <div class="footer-links-top"></div>
+      <div class="footer-links">
+
+        <div class="footer-links-left">
+          <h3 class="underline">About</h3>
+          <p>
+            The City Chain Identity is a registry of identities.
+          </p>
+          <p>
+            The registry builds on decentralized and blockchain technology.
+          </p>
+          <br>
+          <p>
+            <a class="button" [routerLink]="['/about']">Read more <span class="mu mu-arrow-right"></span></a>
+          </p>
+          <br>
+
+        </div>
+        <div class="footer-links-right">
+          <a href="mailto:registry@city-chain.org"><span class="mu mu-mail"></span> post@city-chain.org</a>
+          <a href="https://www.city-chain.org/"><span class="mu mu-web"></span> City Chain</a>
+          <a href="/docs/index.html" target="_blank"><span class="mu mu-code"></span> Open API</a>
+          <a href="https://docs.blockcore.net/" target="_blank"><span class="mu mu-code"></span> Documentation</a>
+        </div>
+
+      </div>
+      <div class="footer-links-bottom"></div>
+    </div>
+
+  </div>
+  <div class="header">
+    <app-nav-menu></app-nav-menu>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="page">
+   <h1>Signing</h1>
+
+   <div class="ruler"></div>
+
+   <p>Sign your registration</p>
+
+   <p>First step is to copy the content below and paste it into the signing page in City Hub:</p>
+
+   <textarea>{{reg.registration | json}}</textarea>
+
+   <p>After you have signed, you can paste the results below:</p>
+
+   <textarea [(ngModel)]="reg.signed"></textarea>
+
+   <p><br><br>
+      <a class="button" [routerLink]="['/register/verify']">Back <span class="mu mu-arrow-left"></span></a>&nbsp;
+      <a class="button" [routerLink]="['/register/payment']">Continue <span class="mu mu-arrow-right"></span></a>
+   </p>
+
+</div>

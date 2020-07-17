@@ -1,0 +1,58 @@
+<div class="page">
+   <h1>Verify</h1>
+
+   <div class="ruler"></div>
+
+   <p>Verify your registration:</p>
+
+   <div class="list-item">
+      <strong>Name</strong>
+      <span>{{reg.registration.name}} CC</span>
+   </div>
+
+   <div class="list-item">
+      <strong>Address</strong>
+      <span>{{reg.registration.address}}</span>
+   </div>
+
+   <div class="list-item">
+      <strong>Website</strong>
+      <span>{{reg.registration.website}}</span>
+   </div>
+
+   <div class="list-item">
+      <strong>Purpose</strong>
+      <span>{{reg.registration.purpose}}</span>
+   </div>
+
+   <div class="list-item">
+      <strong>Manager</strong>
+      <span>{{reg.registration.manager}}</span>
+   </div>
+
+   <div class="list-item">
+      <strong>Director of Board</strong>
+      <span>{{reg.registration.directory}}</span>
+   </div>
+
+   <div class="list-item">
+      <strong>Board</strong>
+      <span>{{reg.registration.board}}</span>
+   </div>
+
+   <div class="list-item">
+      <strong>Signing rights</strong>
+      <span></span>
+   </div>
+
+   <div class="list-item">
+      <strong>Accountant</strong>
+      <span>{{reg.registration.accountant}}</span>
+   </div>
+
+   <p><br><br>
+      <a class="button" [routerLink]="['/register/']">Back <span class="mu mu-arrow-left"></span></a>&nbsp;
+      <a class="button" [routerLink]="['/register/sign']">Continue <span class="mu mu-arrow-right"></span></a>
+   </p>
+
+</div>

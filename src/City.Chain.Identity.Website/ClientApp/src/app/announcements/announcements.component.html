@@ -1,0 +1,57 @@
+<div class="page">
+   <div *ngIf="!announcement">
+
+      <h1>Announcements</h1>
+
+      <div class="ruler"></div>
+
+      <p>Here you can see all announcements of changes to the registry. This includes new entities, modified entities,
+         updates to names, address and more.</p>
+
+      <table class="list-table">
+         <tr>
+            <th>Name</th>
+            <th>ID</th>
+            <th>Type</th>
+         </tr>
+         <tr *ngFor="let announcement of announcements">
+            <td>{{announcement.name}}</td>
+            <td>{{announcement.id}}</td>
+            <td><a [routerLink]="['/announcements', announcement.number]">{{announcement.type}}</a></td>
+         </tr>
+      </table>
+   </div>
+
+   <div *ngIf="announcement">
+
+      <h1>Announcement for:</h1>
+
+      <div class="ruler"></div>
+
+      {{announcement.name}}<br>
+      <strong>{{announcement.id}}</strong>
+
+      <div class="ruler"></div>
+
+      <h3>Event: {{this.announcement.type}}</h3>
+
+      <table class="list-table">
+         <tr *ngFor="let item of this.announcement | keyvalue">
+            <td>{{capitalize(item.key)}}</td>
+            <td>{{item.value}}</td>
+         </tr>
+      </table>
+
+      <p>
+         <br>
+         <a class="button" [routerLink]="['/announcements']">Back to list <span class="mu mu-arrow-left"></span></a>&nbsp;
+         <a class="button" [routerLink]="['/announcements']">All announcements <span class="mu mu-arrow-right"></span></a>
+         <br><br>
+      </p>
+
+   </div>
+
+   <p>&nbsp;</p>
+   <p>&nbsp;</p>
+
+</div>
