@@ -19,6 +19,10 @@ namespace City.Chain.Identity.Website.Services
             nodeApiUrl = configuration.GetValue<string>("NodeApiUrl");
         }
 
+        public string NodeApiUrl { get { return nodeApiUrl; } }
+
+        public string NodeApiKey { get { return nodeApiKey; } }
+
         public RestClient CreateClient()
         {
             var client = new RestClient(nodeApiUrl);

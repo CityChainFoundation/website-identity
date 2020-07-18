@@ -1,3 +1,4 @@
+using AspNetCore.Proxy;
 using City.Chain.Identity.Website.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,6 +24,8 @@ namespace City.Chain.Identity.Website
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddProxies();
 
             services.AddSingleton<NodeService>();
 
