@@ -11,13 +11,13 @@ namespace City.Chain.Identity.Website.Controllers
     public class IdentityController : ControllerBase
     {
         private readonly NodeService node;
-        private HttpProxyOptions _options;
+        private HttpProxyOptions options;
 
         public IdentityController(NodeService node)
         {
             this.node = node;
 
-            _options = HttpProxyOptionsBuilder.Instance.WithBeforeSend((c, hrm) =>
+            options = HttpProxyOptionsBuilder.Instance.WithBeforeSend((c, hrm) =>
             {
                 hrm.Headers.Add("Node-Api-Key", node.NodeApiKey); 
                 return Task.CompletedTask;
@@ -32,7 +32,7 @@ namespace City.Chain.Identity.Website.Controllers
         [HttpGet("{address}")]
         public Task Get([FromRoute] string address)
         {
-            return this.HttpProxyAsync($"{node.NodeApiUrl}/identity/{address}", _options);
+            return this.HttpProxyAsync($"{node.NodeApiUrl}/identity/{address}", options);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace City.Chain.Identity.Website.Controllers
         [HttpPut("{address}")]
         public Task PutIdentity([FromRoute] string address)
         {
-            return this.HttpProxyAsync($"{node.NodeApiUrl}/identity/{address}");
+            return this.HttpProxyAsync($"{node.NodeApiUrl}/identity/{address}", options);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace City.Chain.Identity.Website.Controllers
         [HttpDelete("{address}")]
         public Task DeleteIdentity([FromRoute] string address, [FromBody] string document)
         {
-            return this.HttpProxyAsync($"{node.NodeApiUrl}/identity/{address}");
+            return this.HttpProxyAsync($"{node.NodeApiUrl}/identity/{address}", options);
         }
     }
 }
