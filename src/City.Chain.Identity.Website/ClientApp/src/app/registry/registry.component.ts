@@ -10,12 +10,11 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RegistryComponent implements OnInit, OnDestroy {
 
-  address: string;
   private sub: any;
 
-  private identity: any;
-  private container: any;
-
+  address: string;
+  identity: any;
+  container: any;
   error: string;
 
   constructor(private route: ActivatedRoute, public reg: RegistrationService, public http: HttpClient, @Inject('BASE_URL') public baseUrl: string) {
