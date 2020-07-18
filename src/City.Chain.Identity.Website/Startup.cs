@@ -45,7 +45,7 @@ namespace City.Chain.Identity.Website
                                    Description = ".",
                                    Contact = new OpenApiContact
                                    {
-                                       Name = "Blockcore",
+                                       Name = "City Chain Identity",
                                        Url = new Uri("https://identity.city-chain.org/")
                                    }
                                });

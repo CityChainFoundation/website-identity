@@ -30,10 +30,56 @@ namespace City.Chain.Identity.Website.Controllers
             var request = new RestRequest($"/identity/{address}");
             IRestResponse<string> response = client.Get<string>(request);
 
-            //if (response.StatusCode != System.Net.HttpStatusCode.OK)
-            //{
-            //   throw new ApplicationException(response.ErrorMessage);
-            //}
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                throw new ApplicationException(response.ErrorMessage);
+            }
+
+            return Ok(response.Content);
+        }
+
+        /// <summary>
+        /// Persist the profile of an identity.
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns></returns>
+        [HttpPut("{address}")]
+        public async Task<IActionResult> PutIdentity([FromRoute] string address, [FromBody] string document)
+        {
+            RestClient client = node.CreateClient();
+
+            // Get the identity, if it exists.
+            var request = new RestRequest($"/identity/{address}");
+            request.AddJsonBody(document);
+            IRestResponse<string> response = client.Put<string>(request);
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                throw new ApplicationException(response.ErrorMessage);
+            }
+
+            return Ok(response.Content);
+        }
+
+        /// <summary>
+        /// Remove the profile of an identity.
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns></returns>
+        [HttpDelete("{address}")]
+        public async Task<IActionResult> DeleteIdentity([FromRoute] string address, [FromBody] string document)
+        {
+            RestClient client = node.CreateClient();
+
+            // Get the identity, if it exists.
+            var request = new RestRequest($"/identity/{address}");
+            request.AddJsonBody(document);
+            IRestResponse<string> response = client.Delete<string>(request);
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                throw new ApplicationException(response.ErrorMessage);
+            }
 
             return Ok(response.Content);
         }
