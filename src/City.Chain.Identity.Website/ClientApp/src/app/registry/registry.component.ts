@@ -62,15 +62,15 @@ export class RegistryComponent implements OnInit, OnDestroy {
       this.error = null;
 
       this.container = result;
-      this.identity = result.document;
+      this.identity = result.content;
 
-      // this.reg.registration.name = result.document.name;
-      // this.reg.registration.id = result.document.id;
-      // this.reg.registration.website = result.document.email;
-      // this.reg.registration.address = result.document.shortName;
+      // this.reg.registration.name = result.content.name;
+      // this.reg.registration.id = result.content.id;
+      // this.reg.registration.website = result.content.email;
+      // this.reg.registration.address = result.content.shortName;
 
       // This will show the input form.
-      // this.reg.registration.identity = result.document.id;
+      // this.reg.registration.identity = result.content.id;
 
     }, error => console.error(error));
 

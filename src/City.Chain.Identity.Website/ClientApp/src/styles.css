@@ -261,9 +261,15 @@ strong {
   text-decoration: underline;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
   .page {
     margin: 2em;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .page {
+    margin: 1.4em;
   }
 }
 
@@ -275,8 +281,11 @@ strong {
   h1 {
     font-size: 2em;
   }
-}
 
+  .page {
+    margin: 1em;
+  }
+}
 
 @media only screen and (max-width: 600px) {
   .hide-mobile {
