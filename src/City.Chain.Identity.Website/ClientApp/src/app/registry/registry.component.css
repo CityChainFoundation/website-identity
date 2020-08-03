@@ -159,3 +159,16 @@ input[type="checkbox"] + label, input[type="radio"] + label {
    padding-right: 0.75rem;
    position: relative;
 } */
+
+.identity-image {
+   max-width: 30%;
+   min-width: 128px;
+   float: right;
+   margin-left: 1em;
+   margin-bottom: 1em;
+   border-radius: 10px;
+}
+
+.clear {
+   clear: both;
+}
