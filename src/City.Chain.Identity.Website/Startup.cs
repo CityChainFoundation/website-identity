@@ -40,7 +40,7 @@ namespace City.Chain.Identity.Website
                 {
                     string assemblyVersion = typeof(Startup).Assembly.GetName().Version.ToString();
 
-                    options.SwaggerDoc("indexer",
+                    options.SwaggerDoc("identity",
                                new OpenApiInfo
                                {
                                    Title = "City Chain Identity API",
@@ -98,7 +98,7 @@ namespace City.Chain.Identity.Website
             app.UseSwaggerUI(c =>
             {
                 c.RoutePrefix = "docs";
-                c.SwaggerEndpoint("/docs/indexer/openapi.json", "City Chain Identity API");
+                c.SwaggerEndpoint("/docs/identity/openapi.json", "City Chain Identity API");
             });
 
             app.UseEndpoints(endpoints =>
