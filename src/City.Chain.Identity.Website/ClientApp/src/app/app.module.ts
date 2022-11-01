@@ -47,7 +47,7 @@ import { RegisterSignComponent } from './register/sign.component';
       { path: 'announcements', component: AnnouncementsComponent },
       { path: 'announcements/:number', component: AnnouncementsComponent },
       { path: 'about', component: AboutComponent },
-    ], { onSameUrlNavigation: 'reload' })
+    ], { onSameUrlNavigation: 'reload', relativeLinkResolution: 'legacy' })
   ],
   providers: [],
   bootstrap: [AppComponent]
