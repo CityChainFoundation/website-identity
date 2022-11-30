@@ -1,31 +1,28 @@
-name: .NET Core (Build and Deploy)
+name: Build and Publish Web Site
 
 on: 
   push:
     branches:
       - master
+      - main
 
 jobs:
-  build-and-deploy:
+  build:
+    name: Build and Push
     runs-on: ubuntu-latest
+    
     steps:
 
     - uses: actions/checkout@master
+      name: Checkout
 
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.101
-
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
-
-    - name: dotnet publish
+    - name: Build
       run: |
-        dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/webapp 
-    - name: 'Run Azure webapp deploy action using publish profile credentials'
-      uses: azure/webapps-deploy@v1
-      with: 
-        app-name: blockcore
-        publish-profile: ${{ secrets.azureWebAppPublishProfile }}
-        package: ${{env.DOTNET_ROOT}}/webapp 
+        npm install
+        npm run build
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist
+        cname: identity.city-chain.org

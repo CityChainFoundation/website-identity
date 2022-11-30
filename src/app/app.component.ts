@@ -14,7 +14,13 @@ export class AppComponent implements OnInit {
   constructor(
     readonly router: Router,
     readonly viewportScroller: ViewportScroller
-  ) {}
+  ) {
+    let path = localStorage.getItem('path');
+    if (path) {
+      localStorage.removeItem('path');
+      this.router.navigate([path]);
+    }
+  }
 
   ngOnInit() {
     this.router.events
