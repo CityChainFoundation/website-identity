@@ -46,6 +46,12 @@
    text-decoration: underline;
 }
 
+.hr {
+   height: 1px;
+   margin-top: 1em;
+   margin-bottom: 1em;
+   border-bottom: 1px solid var(--border);
+}
 
 @media only screen and (max-width: 500px) {
    .footer-links-left {
