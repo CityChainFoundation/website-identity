@@ -19,24 +19,40 @@
 
       <h3>Found identity</h3>
 
-      <img *ngIf="identity.image" class="identity-image" [src]="identity.image" />
-
-      <div class="list-item">
-         <strong>ID</strong>
-         <span class="list-item-break">{{identity.identifier}}</span>
-      </div>
-
-      <div class="list-item">
-         <strong>Name</strong>
-         <span>{{identity.name}}</span>
-      </div>
+      <!-- <img *ngIf="identity.image" class="identity-image" [src]="identity.image" /> -->
 
       <div class="list-item">
          <strong>Short</strong>
-         <span>{{identity.shortname}}</span>
+         <span>{{identity.short}}</span>
       </div>
 
       <div class="list-item">
+         <strong>ID</strong>
+         <span class="list-item-break">{{identity.did}}</span>
+      </div>
+
+      <div class="list-item">
+         <strong>Version</strong>
+         <span class="list-item-break">{{didResolutionResult.didDocumentMetadata['versionId']}}</span>
+      </div>
+
+      <div class="list-item">
+         <strong>Active</strong>
+         <span class="list-item-break">{{didResolutionResult.didDocumentMetadata['deactivated'] == false}}</span>
+      </div>
+
+      <div class="list-item">
+         <strong>Updated</strong>
+         <span class="list-item-break">{{didResolutionResult.didDocumentMetadata['updated']}}</span>
+      </div>
+
+      <!-- <div class="list-item">
+         <strong>Name</strong>
+         <span>{{identity.name}}</span>
+      </div> -->
+
+
+      <!-- <div class="list-item">
          <strong>Alias</strong>
          <span>{{identity.alias}}</span>
       </div>
@@ -59,13 +75,13 @@
       <div class="list-item list-item-margin clear">
          <strong>Signature</strong>
          <span class="list-item-break">Type: {{container.signature.type}}<br>Value: {{container.signature.value}}</span>
-      </div>
+      </div> -->
 
       <div class="list-item">
          <strong>Document</strong>
       </div>
       <div class="list-item">
-         <textarea class="document">{{container | json}}</textarea>
+         <textarea class="document">{{didResolutionResult | json}}</textarea>
       </div>
 
    </div>

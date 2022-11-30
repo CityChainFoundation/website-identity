@@ -2,27 +2,36 @@ import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { RegistrationService } from 'src/shared/registration.service';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import is from '@blockcore/did-resolver';
+import { Resolver, DIDDocument, DIDResolutionResult } from 'did-resolver';
+import { BlockcoreIdentityTools, BlockcoreIdentity } from '@blockcore/identity';
 
 @Component({
   selector: 'app-registry-component',
   templateUrl: './registry.component.html',
-  styleUrls: ['./registry.component.css']
+  styleUrls: ['./registry.component.css'],
 })
 export class RegistryComponent implements OnInit, OnDestroy {
-
   private sub: any;
 
-  address: string;
+  address: string | undefined;
   identity: any;
+  didDocument: DIDDocument | undefined;
+  didResolutionResult: DIDResolutionResult | undefined;
   container: any;
-  error: string;
+  error: string | undefined;
+  tools: BlockcoreIdentityTools;
 
-  constructor(private route: ActivatedRoute, public reg: RegistrationService, public http: HttpClient, @Inject('BASE_URL') public baseUrl: string) {
-
+  constructor(
+    private route: ActivatedRoute,
+    public reg: RegistrationService,
+    public http: HttpClient
+  ) {
+    this.tools = new BlockcoreIdentityTools();
   }
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => {
+    this.sub = this.route.params.subscribe((params) => {
       this.address = params['address'];
 
       if (this.address) {
@@ -33,7 +42,7 @@ export class RegistryComponent implements OnInit, OnDestroy {
     });
   }
 
-  capitalize(word) {
+  capitalize(word: string) {
     return word[0].toUpperCase() + word.slice(1).toLowerCase();
   }
 
@@ -41,38 +50,59 @@ export class RegistryComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  lookupIdentity(identity: string) {
+  async lookupIdentity(identity: string) {
+    const resolver = new Resolver(is.getResolver());
 
-    this.http.get<any>(this.baseUrl + 'api/identity/' + identity).subscribe(result => {
+    this.didResolutionResult = await resolver.resolve(identity);
 
-      if (!result) {
-        console.log('result is empty!!');
-        this.error = 'Couldn\'t find any identity with that id.';
-        return;
+    if (
+      this.didResolutionResult.didResolutionMetadata.error != 'notFound' &&
+      this.didResolutionResult.didDocument
+    ) {
+      if (
+        this.didResolutionResult.didDocument &&
+        this.didResolutionResult.didDocument.verificationMethod &&
+        this.didResolutionResult.didDocument.verificationMethod[0] != null
+      ) {
+        const verificationMethod =
+          this.didResolutionResult.didDocument.verificationMethod[0];
+        this.identity = new BlockcoreIdentity(verificationMethod as any);
       }
 
-      if (result.status === 401) {
-        this.error = 'The service is currently not available, unauthorized"';
-        return;
-      }
+      this.didDocument = this.didResolutionResult.didDocument;
+      console.log(this.identity);
+      console.log(this.didDocument);
+    }
 
-      console.log('result is:');
-      console.log(result);
+    // this.http.get<any>(this.baseUrl + 'api/identity/' + identity).subscribe(result => {
 
-      this.error = null;
+    //   if (!result) {
+    //     console.log('result is empty!!');
+    //     this.error = 'Couldn\'t find any identity with that id.';
+    //     return;
+    //   }
 
-      this.container = result;
-      this.identity = result.content;
+    //   if (result.status === 401) {
+    //     this.error = 'The service is currently not available, unauthorized"';
+    //     return;
+    //   }
 
-      // this.reg.registration.name = result.content.name;
-      // this.reg.registration.id = result.content.id;
-      // this.reg.registration.website = result.content.email;
-      // this.reg.registration.address = result.content.shortName;
+    //   console.log('result is:');
+    //   console.log(result);
 
-      // This will show the input form.
-      // this.reg.registration.identity = result.content.id;
+    //   this.error = undefined;
 
-    }, error => console.error(error));
+    //   this.container = result;
+    //   this.identity = result.content;
 
+    //   // this.reg.registration.name = result.content.name;
+    //   // this.reg.registration.id = result.content.id;
+    //   // this.reg.registration.website = result.content.email;
+    //   // this.reg.registration.address = result.content.shortName;
+
+    //   // This will show the input form.
+    //   // this.reg.registration.identity = result.content.id;
+
+    // }, error => console.error(error));
   }
 }

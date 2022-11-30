@@ -6,23 +6,22 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-register-component',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   private sub: any;
 
-  identityInput: string;
+  identityInput: string | undefined;
 
-
-
-  constructor(private route: ActivatedRoute, public reg: RegistrationService, public http: HttpClient, @Inject('BASE_URL') public baseUrl: string) {
-
-  }
+  constructor(
+    private route: ActivatedRoute,
+    public reg: RegistrationService,
+    public http: HttpClient,
+    @Inject('BASE_URL') public baseUrl: string
+  ) {}
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => {
-
-    });
+    this.sub = this.route.params.subscribe((params) => {});
   }
 
   ngOnDestroy() {
@@ -30,18 +29,17 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   lookupIdentity(identity: string) {
+    this.http.get<any>(this.baseUrl + 'api/identity/' + identity).subscribe(
+      (result) => {
+        this.reg.registration.name = result.content.name;
+        this.reg.registration.id = result.content.id;
+        this.reg.registration.website = result.content.email;
+        this.reg.registration.address = result.content.shortName;
 
-    this.http.get<any>(this.baseUrl + 'api/identity/' + identity).subscribe(result => {
-
-      this.reg.registration.name = result.content.name;
-      this.reg.registration.id = result.content.id;
-      this.reg.registration.website = result.content.email;
-      this.reg.registration.address = result.content.shortName;
-
-      // This will show the input form.
-      this.reg.registration.identity = result.content.id;
-
-    }, error => console.error(error));
-
+        // This will show the input form.
+        this.reg.registration.identity = result.content.id;
+      },
+      (error) => console.error(error)
+    );
   }
 }

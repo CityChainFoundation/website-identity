@@ -95,6 +95,7 @@ header {
 }
 
 .menu {
+  cursor: pointer;
   font-size: 1em;
   border-left: 1px solid var(--border);
   display: flex;
