@@ -16,8 +16,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     public reg: RegistrationService,
-    public http: HttpClient,
-    @Inject('BASE_URL') public baseUrl: string
+    public http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -29,17 +28,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   lookupIdentity(identity: string) {
-    this.http.get<any>(this.baseUrl + 'api/identity/' + identity).subscribe(
-      (result) => {
-        this.reg.registration.name = result.content.name;
-        this.reg.registration.id = result.content.id;
-        this.reg.registration.website = result.content.email;
-        this.reg.registration.address = result.content.shortName;
-
-        // This will show the input form.
-        this.reg.registration.identity = result.content.id;
-      },
-      (error) => console.error(error)
-    );
+    
   }
 }

@@ -6,6 +6,10 @@ import is from '@blockcore/did-resolver';
 import { Resolver, DIDDocument, DIDResolutionResult } from 'did-resolver';
 import { BlockcoreIdentityTools, BlockcoreIdentity } from '@blockcore/identity';
 
+function sleep(durationInMillisecond: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, durationInMillisecond));
+}
+
 @Component({
   selector: 'app-registry-component',
   templateUrl: './registry.component.html',
@@ -21,6 +25,7 @@ export class RegistryComponent implements OnInit, OnDestroy {
   container: any;
   error: string | undefined;
   tools: BlockcoreIdentityTools;
+  resolving = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,12 +35,15 @@ export class RegistryComponent implements OnInit, OnDestroy {
     this.tools = new BlockcoreIdentityTools();
   }
 
-  ngOnInit() {
-    this.sub = this.route.params.subscribe((params) => {
+  async ngOnInit() {
+    this.sub = this.route.params.subscribe(async (params) => {
+      this.identity = undefined;
+      this.didResolutionResult = undefined;
       this.address = params['address'];
 
       if (this.address) {
-        this.lookupIdentity(this.address);
+        this.resolving = true;
+        await this.lookupIdentity(this.address);
       }
 
       // this.announcement = this.announcements.filter(a => a.number === this.number)[0];
@@ -46,32 +54,69 @@ export class RegistryComponent implements OnInit, OnDestroy {
     return word[0].toUpperCase() + word.slice(1).toLowerCase();
   }
 
+  getDate(timestamp: number) {
+    return new Date(Number(timestamp) * 1000);
+  }
+
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
   async lookupIdentity(identity: string) {
+    this.error = undefined;
     const resolver = new Resolver(is.getResolver());
 
-    this.didResolutionResult = await resolver.resolve(identity);
+    console.log('RESOLVING...');
 
-    if (
-      this.didResolutionResult.didResolutionMetadata.error != 'notFound' &&
-      this.didResolutionResult.didDocument
-    ) {
+    let result = null;
+
+    try {
+      result = await resolver.resolve(identity);
+      console.log('RESOLVED!!', result);
+      console.log('HERE?!?!?!?!');
+      this.resolving = false;
+      this.didResolutionResult = result;
+    } catch (err) {
+      this.resolving = false;
+      console.error('NO!!', err);
+    }
+
+    if (!result) {
+      this.error = 'Resolution unable to complete.';
+      return;
+    }
+
+    if (result.didResolutionMetadata.error == 'notFound') {
+      this.error = 'The identity was not found.';
+      return;
+    }
+
+    if (result.didResolutionMetadata.error == 'invalidDid') {
+      this.error = 'The identity ID was invalid.';
+      return;
+    }
+
+    if (result.didResolutionMetadata.error == 'unsupportedDidMethod') {
+      this.error =
+        'Unsupported DID Method, only did:is is currently supported.';
+      return;
+    }
+
+    if (result.didDocument) {
       if (
-        this.didResolutionResult.didDocument &&
-        this.didResolutionResult.didDocument.verificationMethod &&
-        this.didResolutionResult.didDocument.verificationMethod[0] != null
+        result.didDocument &&
+        result.didDocument.verificationMethod &&
+        result.didDocument.verificationMethod[0] != null
       ) {
-        const verificationMethod =
-          this.didResolutionResult.didDocument.verificationMethod[0];
+        const verificationMethod = result.didDocument.verificationMethod[0];
         this.identity = new BlockcoreIdentity(verificationMethod as any);
       }
 
-      this.didDocument = this.didResolutionResult.didDocument;
+      this.didDocument = result.didDocument;
       console.log(this.identity);
       console.log(this.didDocument);
+    } else {
+      this.error = result.didResolutionMetadata.error;
     }
 
     // this.http.get<any>(this.baseUrl + 'api/identity/' + identity).subscribe(result => {
