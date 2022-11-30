@@ -19,7 +19,6 @@
     "@angular/forms": "14.2.8",
     "@angular/platform-browser": "14.2.8",
     "@angular/platform-browser-dynamic": "14.2.8",
-    "@angular/platform-server": "14.2.8",
     "@angular/router": "14.2.8",
     "@nguniversal/module-map-ngfactory-loader": "8.2.6",
     "core-js": "^3.6.5",
